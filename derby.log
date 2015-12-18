@@ -1,11 +1,11 @@
 ----------------------------------------------------------------
-Mon Jul 20 16:15:34 JST 2015:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.1 - (1458268): instance a816c00e-014e-aa51-541e-0000178fdd70 
-on database directory /tmp/spark-19b7ca58-2f89-4f63-bf5a-f509e2c4dd0d/metastore with class loader sun.misc.Launcher$AppClassLoader@6132b73b 
-Loaded from file:/usr/local/spark-1.4.0/lib/spark-assembly-1.4.0-hadoop2.6.0.jar
+Fri Dec 18 19:15:10 JST 2015:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.1 - (1458268): instance a816c00e-0151-b496-071e-000013ee2d48 
+on database directory /tmp/spark-b5a076bf-f5cf-4fac-b3bf-603e0612b2df/metastore with class loader sun.misc.Launcher$AppClassLoader@5bb77832 
+Loaded from file:/usr/local/spark-1.4.0-bin-hadoop2.6/lib/spark-assembly-1.4.0-hadoop2.6.0.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.7.0_75-b13
-user.dir=/home/wakayama/dev/scala/spark_mllib
+java.runtime.version=1.7.0_79-b14
+user.dir=/home/wakayama/repos/scala/spark_mllib
 os.name=Linux
 os.arch=amd64
 os.version=3.16.0-23-generic
