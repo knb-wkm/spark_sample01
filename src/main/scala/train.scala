@@ -11,9 +11,9 @@ import scala.runtime.ScalaRunTime._
 
 object NaiveBayesSample {
   def main(args: Array[String]) = {
-    val conf = new SparkConf().setAppName("simple application").setMaster("local[2]")
+    val conf = new SparkConf().setAppName("simple application").setMaster("local")
     val sc = new SparkContext(conf)
-    val data = sc.textFile("data/jawiki-latest-pages-articles.tsv")
+    val data = sc.textFile("data/jawiki-latest-pages-articles.tsv").cache()
     val labels = data.map{_.split("\t")(0)}
     val texts =  data.map{_.split("\t")(1)}.map{get_words(_)}.map{_.toSeq}
     val htf = new HashingTF(1000)
@@ -23,9 +23,7 @@ object NaiveBayesSample {
     val training = labels.zipWithIndex().map(_._2.toDouble).zip(tfidf).map(x => LabeledPoint(x._1, x._2))
     val model = NaiveBayes.train(training)
     model.save(sc, "model")
-    tfidf.saveAsTextFile("model/
-    debug_message
-    println(tfidf.getClass)
+    tfidf.saveAsTextFile("model/tfidf.txt")
     sc.stop()
   }
 
