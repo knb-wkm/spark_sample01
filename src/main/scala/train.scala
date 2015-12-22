@@ -22,8 +22,14 @@ object NaiveBayesSample {
     val tfidf = idf.transform(tf)
     val training = labels.zipWithIndex().map(_._2.toDouble).zip(tfidf).map(x => LabeledPoint(x._1, x._2))
     val model = NaiveBayes.train(training)
-    model.save(sc, "model")
-    tfidf.saveAsTextFile("model/tfidf.txt")
+    // model.save(sc, "model")
+    // tfidf.saveAsTextFile("model/tfidf.txt")
+    val words = List("武将"," 大名", "天下人", "関白", "太閤")
+    val test_tf = htf.transform(words)
+    val test = model.predict(test_tf)
+    debug_message()
+    println(htf.getClass)
+    println(test)
     sc.stop()
   }
 
