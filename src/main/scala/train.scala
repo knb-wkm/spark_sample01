@@ -9,32 +9,33 @@ import org.atilika.kuromoji.Tokenizer
 import org.atilika.kuromoji.Token
 import scala.runtime.ScalaRunTime._
 
-object NaiveBayesSample {
+object NaiveBayesTrain {
   def main(args: Array[String]) = {
     val conf = new SparkConf().setAppName("simple application").setMaster("local")
     val sc = new SparkContext(conf)
     val data = sc.textFile("data/jawiki-latest-pages-articles.tsv").cache()
     val labels = data.map{_.split("\t")(0)}
-    val texts =  data.map{_.split("\t")(1)}.map{get_words(_)}.map{_.toSeq}
+    val texts =  data.map{_.split("\t")(1)}.map{wakati(_)}.map{_.toSeq}
     val htf = new HashingTF(1000)
     val tf = htf.transform(texts)
     val idf = new IDF().fit(tf)
     val tfidf = idf.transform(tf)
     val training = labels.zipWithIndex().map(_._2.toDouble).zip(tfidf).map(x => LabeledPoint(x._1, x._2))
     val model = NaiveBayes.train(training)
-    // model.save(sc, "model")
-    // tfidf.saveAsTextFile("model/tfidf.txt")
-    val words = List("武将"," 大名", "天下人", "関白", "太閤")
-    val test_tf = htf.transform(words)
-    val test = model.predict(test_tf)
-    debug_message()
-    println(htf.getClass)
-    println(test)
+    model.save(sc, "model")
+    labels.saveAsObjectFile("model/labels.txt")
+    texts.saveAsObjectFile("model/texts.txt")
+    // val words = List("武将"," 大名", "天下人", "関白", "太閤")
+    // val test_tf = htf.transform(words)
+    // val test = model.predict(test_tf)
+    // debug_message()
+    // println(htf.getClass)
+    // println(test)
     sc.stop()
   }
 
   def debug_message() = { println("#" * 100) }
-  def get_words(words: String) = {
+  def wakati(words: String) = {
     val tokenizer = Tokenizer.builder.mode(Tokenizer.Mode.NORMAL).build
     tokenizer.tokenize(words).toArray.filter{t =>
       val token = t.asInstanceOf[Token].getAllFeatures.split(",")(0)
