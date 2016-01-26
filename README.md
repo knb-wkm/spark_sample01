@@ -18,6 +18,22 @@ $ spark-submit --master yarn target/scala-2.10/Train-assembly-1.0.jar
 $ sbt run
 ```
 
+## コード解説
+- build.sbt
+  + mavenみたいなもの
+  + xml, yamlなどではなくscalaで記載する
+
+- resources.conf
+  + train.scalaのパラメータを外部に逃したもの
+  + typesafe.configにて作成(xxxx.propertyは?)
+  + typesafe社が開発したライブラリ(java, scalaどっちでも)
+
+- train.scala
+  + あまり関数型っぽく実装できていない...
+  + typesafe.configにてパラメータを呼び出し
+  + あとはsparkドキュメントどおり
+  + 日本語の処理なのでwakatiエンジンはkuromojiを使用した
+
 ## 心配事
 - 分散されていない処理がある
   + tf-idf
