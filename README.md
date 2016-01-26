@@ -1,6 +1,11 @@
 # naive bayes train
-## パラメータ
+## 各種パラメータ
 reference.confを参照
+
+## jar化
+```
+$ sbt assembly
+```
 
 ## 実行方法
 yarn上で動作させたい人
