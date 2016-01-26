@@ -15,7 +15,7 @@ object NaiveBayesTrain {
     val sc = new SparkContext(conf)
     val data = sc.textFile("data/jawiki-latest-pages-articles.tsv").cache()
     val labels = data.map{_.split("\t")(0)}
-    val texts =  data.map{_.split("\t")(1)}.map{wakati(_)}.map{_.toSeq}
+    val texts =  data.map{splitter(_)}.map{wakati(_)}.map{_.toSeq}
     val htf = new HashingTF(1000)
     val tf = htf.transform(texts)
     val idf = new IDF().fit(tf)
@@ -23,8 +23,8 @@ object NaiveBayesTrain {
     val training = labels.zipWithIndex().map(_._2.toDouble).zip(tfidf).map(x => LabeledPoint(x._1, x._2))
     val model = NaiveBayes.train(training)
     model.save(sc, "model")
-    labels.saveAsObjectFile("model/labels.txt")
-    texts.saveAsObjectFile("model/texts.txt")
+    labels.saveAsObjectFile("model/labels")
+    texts.saveAsObjectFile("model/texts")
     // val words = List("武将"," 大名", "天下人", "関白", "太閤")
     // val test_tf = htf.transform(words)
     // val test = model.predict(test_tf)
@@ -35,6 +35,7 @@ object NaiveBayesTrain {
   }
 
   def debug_message() = { println("#" * 100) }
+  def splitter(word: String) = { if(word.split("\t").size == 1) "" else word.split("\t")(1) }
   def wakati(words: String) = {
     val tokenizer = Tokenizer.builder.mode(Tokenizer.Mode.NORMAL).build
     tokenizer.tokenize(words).toArray.filter{t =>
