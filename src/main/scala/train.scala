@@ -1,5 +1,4 @@
 import org.apache.spark.SparkContext
-import org.apache.spark.SparkContext._
 import org.apache.spark.SparkConf
 import org.apache.spark.mllib.classification.{NaiveBayes, NaiveBayesModel}
 import org.apache.spark.mllib.linalg.Vectors
@@ -7,7 +6,6 @@ import org.apache.spark.mllib.regression.LabeledPoint
 import org.apache.spark.mllib.feature.{HashingTF, IDF}
 import org.atilika.kuromoji.Tokenizer
 import org.atilika.kuromoji.Token
-import scala.runtime.ScalaRunTime._
 
 object NaiveBayesTrain {
   def main(args: Array[String]) = {
